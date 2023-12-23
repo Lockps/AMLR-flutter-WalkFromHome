@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:walkfromhome_rebuildproject/profile.dart';
+import 'package:walkfromhome_rebuildproject/testlatlng/walking_screen.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -117,12 +118,18 @@ class MainPage extends StatelessWidget {
                           border: Border.all(color: Colors.white),
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Center(
-                        child: Text(
-                          "เริ่มทดสอบ",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.02),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => OnWalk()));
+                          },
+                          child: Text(
+                            "เริ่มทดสอบ",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.02),
+                          ),
                         ),
                       ),
                     ),

@@ -32,30 +32,18 @@ class ProfileBg extends StatelessWidget {
   }
 }
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned(
-          top: MediaQuery.of(context).size.height * 0.06,
-          left: MediaQuery.of(context).size.width * 0.03,
-          child: InkWell(
-            onTap: () {
-              print("object");
-              Navigator.of(context).pop(context);
-            },
-            child: Container(
-              child: Icon(
-                Icons.arrow_back,
-                size: MediaQuery.of(context).size.width * 0.07,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
         Positioned(
           top: MediaQuery.of(context).size.height * 0.027,
           child: Container(
@@ -157,7 +145,24 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ),
-        )
+        ),
+        Positioned(
+          top: MediaQuery.of(context).size.height * 0.06,
+          left: MediaQuery.of(context).size.width * 0.03,
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).pop(context);
+            },
+            child: Container(
+              color: Colors.orange,
+              child: Icon(
+                Icons.arrow_back,
+                size: MediaQuery.of(context).size.width * 0.07,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
