@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:walkfromhome_rebuildproject/mainpage.dart';
 
@@ -104,6 +105,31 @@ class FormLogin extends StatefulWidget {
 
 class _FormLoginState extends State<FormLogin> {
   bool isRegis = true;
+
+  final emailcontroller = TextEditingController();
+  final passwordcontroller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    checkisLogin();
+  }
+
+  checkisLogin() async {
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user != null) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MainPage()));
+      }
+    });
+  }
+
+  Future signin() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailcontroller.text.trim(),
+        password: passwordcontroller.text.trim());
+  }
+
   @override
   Widget build(BuildContext context) {
     return isRegis
@@ -143,6 +169,16 @@ class _FormLoginState extends State<FormLogin> {
                     color: Colors.white,
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: TextFormField(
+                  controller: emailcontroller,
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      border: InputBorder.none,
+                      hintText: "กรุณากรอก email",
+                      hintStyle: TextStyle()),
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.01,
@@ -163,23 +199,30 @@ class _FormLoginState extends State<FormLogin> {
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
               Container(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.all(Radius.circular(10)))),
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: MediaQuery.of(context).size.height * 0.05,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: TextFormField(
+                  controller: passwordcontroller,
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      border: InputBorder.none,
+                      hintText: "กรุณากรอกรหัสผ่าน",
+                      hintStyle: TextStyle()),
+                ),
+              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.0),
               InkWell(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return MainPage();
-                    },
-                  ));
+                  signin();
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.7,
@@ -249,7 +292,7 @@ class _FormLoginState extends State<FormLogin> {
               )
             ],
           )
-//! ======================= LOGIN - REGIS =============================
+//! ======================= REGIS =============================
         : Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -279,9 +322,20 @@ class _FormLoginState extends State<FormLogin> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: MediaQuery.of(context).size.height * 0.05,
                 decoration: BoxDecoration(
+                    color: Colors.white,
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      border: InputBorder.none,
+                      hintText: "กรุณากรอกชื่อจริง",
+                      hintStyle: TextStyle()),
+                ),
               ),
+              Spacer(),
               Row(
                 children: [
                   SizedBox(
@@ -299,9 +353,20 @@ class _FormLoginState extends State<FormLogin> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: MediaQuery.of(context).size.height * 0.05,
                 decoration: BoxDecoration(
+                    color: Colors.white,
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      border: InputBorder.none,
+                      hintText: "กรุณากรอกนามสกุล",
+                      hintStyle: TextStyle()),
+                ),
               ),
+              Spacer(),
               Row(
                 children: [
                   SizedBox(
@@ -319,29 +384,20 @@ class _FormLoginState extends State<FormLogin> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: MediaQuery.of(context).size.height * 0.05,
                 decoration: BoxDecoration(
+                    color: Colors.white,
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      border: InputBorder.none,
+                      hintText: "กรุณากรอกเบอร์โทรศัพท์",
+                      hintStyle: TextStyle()),
+                ),
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.1,
-                  ),
-                  Text(
-                    "Username",
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.height * 0.018,
-                        fontWeight: FontWeight.w500),
-                  )
-                ],
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.7,
-                height: MediaQuery.of(context).size.height * 0.05,
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-              ),
+              Spacer(),
               Row(
                 children: [
                   SizedBox(
@@ -359,9 +415,20 @@ class _FormLoginState extends State<FormLogin> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: MediaQuery.of(context).size.height * 0.05,
                 decoration: BoxDecoration(
+                    color: Colors.white,
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      border: InputBorder.none,
+                      hintText: "กรุณาระบุ email",
+                      hintStyle: TextStyle()),
+                ),
               ),
+              Spacer(),
               Row(
                 children: [
                   SizedBox(
@@ -379,9 +446,20 @@ class _FormLoginState extends State<FormLogin> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: MediaQuery.of(context).size.height * 0.05,
                 decoration: BoxDecoration(
+                    color: Colors.white,
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      border: InputBorder.none,
+                      hintText: "กรุณากรอกรหัสผ่าน",
+                      hintStyle: TextStyle()),
+                ),
               ),
+              Spacer(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
@@ -425,7 +503,9 @@ class _FormLoginState extends State<FormLogin> {
                     ),
                   ),
                 ],
-              )
+              ),
+              Spacer(),
+              Spacer()
             ],
           );
   }

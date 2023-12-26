@@ -1,16 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:walkfromhome_rebuildproject/firebase_options.dart';
 import 'package:walkfromhome_rebuildproject/loginpage.dart';
-import 'package:walkfromhome_rebuildproject/testlatlng/distance.dart';
-import 'package:walkfromhome_rebuildproject/teststep/test.dart';
-import 'package:walkfromhome_rebuildproject/teststep/test01.dart';
 
-void main(List<String> args) {
+Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  runApp(Test());
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
